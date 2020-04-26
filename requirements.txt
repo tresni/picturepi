@@ -4,5 +4,3 @@ Flask
 Flask-WTF
 python-crontab
 croniter
-python-dateutil
-pytz

@@ -16,7 +16,7 @@
 from datetime import datetime
 from random import randrange
 
-from flask import Flask, render_template as render
+from flask import Flask, redirect, render_template as render
 
 from app.forms import *
 from app.cron import crontab, cronjob
@@ -57,6 +57,7 @@ def retrieve(retrieve, crontab):
         else:
             retrieve.minute.every(form.frequency.data)
         crontab.write()
+        return redirect('/retrieve')
     return render('photos.jinja', form=form)
 
 # @authenticated
@@ -73,6 +74,7 @@ def screen(on, off, crontab):
         on.setall(form.on.data)
         off.setall(form.off.data)
         crontab.write()
+        return redirect('/screen')
     return render('screen.jinja', form=form)
 
 
@@ -81,4 +83,5 @@ def timezone():
     form = TimeZoneForm(data={"timezone": getTimezone()})
     if form.validate_on_submit():
         setTimezone(form.timezone.data)
+        return redirect('/timezone')
     return render('timezone.jinja', form=form)
