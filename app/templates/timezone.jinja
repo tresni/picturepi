@@ -1,5 +1,19 @@
 <form id="timezone" method="POST" action="/timezone">
     {{ form.csrf_token }}
-	Timezone: {{ form.timezone(**{"data-live-search": "true"}) }}
-    <input type="submit" value="Go">
+    <div class="form-row">
+        <div class="col-4"></div>
+        <div class="col">
+        <legend>Timezone</legend>
+        </div>
+    </div>
+    <div class="form-row">
+    <div class="col-4"></div>
+    <div class="form-group col-4">
+	{{ form.timezone(**{"data-live-search": "true"}) }}
+    </div>
+    <div class="form-group col-1">
+        <input type="submit" class="btn btn-primary" value="Save">
+    </div>
+    <div class="col-3"></div>
+    </div>
 </form>
