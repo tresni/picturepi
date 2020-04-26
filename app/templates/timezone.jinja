@@ -1,0 +1,5 @@
+<form id="timezone" method="POST" action="/timezone">
+    {{ form.csrf_token }}
+	Timezone: {{ form.timezone(**{"data-live-search": "true"}) }}
+    <input type="submit" value="Go">
+</form>

@@ -1,0 +1,5 @@
+<form id="screen" method="POST" action="/screen">
+    {{ form.csrf_token }}
+	Screen is enabled from {{ form.on }} to {{ form.off }}.
+    <input type="submit" value="Go">
+</form>

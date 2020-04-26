@@ -1,0 +1,5 @@
+<form id="retrieve" method="POST" action="/retrieve">
+    {{ form.csrf_token }}
+	Retrieve photos every {{ form.frequency }}.
+    <input type="submit" value="Go">
+</form>
