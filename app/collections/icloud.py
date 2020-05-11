@@ -51,7 +51,6 @@ class icloudCollection(object):
 
         for k, p in assets["items"].items():
             if k not in wanted:
-                print("Not a wanted derivative %s" % k)
                 continue
 
             loc = assets["locations"][p["url_location"]]
@@ -60,7 +59,6 @@ class icloudCollection(object):
             localfn = os.path.join(output, "%s%s" % (k, ext))
             filenames.append(localfn)
             if os.path.exists(localfn):
-                print("Already have file %s" % k)
                 continue
 
             photo = s.get(url)
