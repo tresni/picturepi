@@ -16,11 +16,12 @@
 from datetime import datetime
 from random import randrange
 
-from flask import Flask, redirect, render_template as render
+from flask import Flask, redirect, g, render_template as render
 
 from app.forms import *
 from app.cron import crontab, cronjob
 from app.timedatectl import getTimezone, setTimezone
+from app.database import db
 
 app = Flask(__name__)
 app.secret_key = b"Z\xfa_'@D\xe4\x07'\xd7\x91a\x12A\x97\xdb"
@@ -32,7 +33,7 @@ def index():
 
 # @authenticated
 @app.route('/retrieve', methods=['POST', 'GET'])
-@crontab
+@crontab("pi")
 @cronjob("retrieve photos")
 def retrieve(retrieve, crontab):
     frequency = None
@@ -62,7 +63,7 @@ def retrieve(retrieve, crontab):
 
 # @authenticated
 @app.route('/screen', methods=['POST', 'GET'])
-@crontab
+@crontab()
 @cronjob("photo screen on", "echo -n 0 > /sys/class/backlight/rpi_backlight/bl_power")
 @cronjob("photo screen off", "echo -n 1 > /sys/class/backlight/rpi_backlight/bl_power")
 def screen(on, off, crontab):
@@ -85,3 +86,11 @@ def timezone():
         setTimezone(form.timezone.data)
         return redirect('/timezone')
     return render('timezone.jinja', form=form)
+
+
+@app.route('/albums', methods=['POST', 'GET'])
+def albums():
+    form = AlbumsForm()
+    if form.validate_on_submit():
+        redirect('/albums')
+    return render('albums.jinja', form=form)

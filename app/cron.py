@@ -19,21 +19,17 @@ from crontab import CronTab
 cronfile = os.environ.get('CRONTAB', os.path.join(os.getcwd(), 'crontab'))
 
 
-def crontab(f):
-    @wraps(f)
-    def decorator(*args, **kwargs):
-        try:
-            crontab = CronTab(tabfile=cronfile)
-        except FileNotFoundError:
-            with open(cronfile, 'a'):
-                pass
-            crontab = CronTab(tabfile=cronfile)
-
-        return f(*args, crontab=crontab, **kwargs)
-    return decorator
+def crontab(user="root"):
+    def inner(func):
+        @wraps(func)
+        def decorator(*args, **kwargs):
+            crontab = CronTab(user=user)
+            return func(*args, crontab=crontab, **kwargs)
+        return decorator
+    return inner
 
 
-def cronjob(name, user="root", command="echo"):
+def cronjob(name, command="echo"):
     def inner(func):
         @wraps(func)
         def decorator(*args, **kwargs):
@@ -42,7 +38,7 @@ def cronjob(name, user="root", command="echo"):
             try:
                 job = next(crontab.find_comment(name))
             except StopIteration:
-                job = crontab.new(comment=name, user=user, command=command)
+                job = crontab.new(comment=name, command=command)
 
             args = args + (job,)
             return func(*args, **kwargs)

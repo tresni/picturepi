@@ -1,0 +1,19 @@
+<form id="retrieve" method="POST" action="/albums">
+    {{ form.csrf_token }}
+    <div class="form-row">
+        <div class="col-4"></div>
+        <div class="col">
+        <legend>Photo Albums</legend>
+        </div>
+    </div>
+    <div class="form-row">
+    <div class="col-4"></div>
+    <div class="form-group col-5">
+        {{ form.albums }}
+    </div>
+    <div class="form-group col-1">
+        <input type="submit" class="btn btn-primary" value="Save">
+    </div>
+    <div class="col-3"></div>
+    </div>
+</form>

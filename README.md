@@ -45,7 +45,7 @@ xset s noblank
 
 ### Using feh
 
-[feh](https://feh.finalrewind.org/) doesn't support animation, but randomization is a nice touch.  Also, properly vertical alignment on landscape photos.
+[feh](https://feh.finalrewind.org/) doesn't support animation, but randomization is a nice touch.  Also, properly vertical alignment on landscape photos.  Sadly, feh is not compiled with inotify support on Debian/Raspbian.
 
 ```bash
 sudo apt-get install feh ;

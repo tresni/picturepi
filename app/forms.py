@@ -15,8 +15,10 @@
 from app.timedatectl import listTimezones
 
 from flask_wtf import FlaskForm
-from wtforms import SelectField
+from wtforms import SelectField, StringField
+from wtforms.fields import FieldList
 from wtforms.fields.html5 import TimeField
+from wtforms.validators import URL
 
 
 class ScreenTimeForm(FlaskForm):
@@ -35,3 +37,7 @@ class PhotoRetrievalForm(FlaskForm):
 
 class TimeZoneForm(FlaskForm):
     timezone = SelectField('Timezone', choices=list(zip(listTimezones(), listTimezones())))
+
+
+class AlbumsForm(FlaskForm):
+    albums = FieldList(StringField('Albums', [URL(), ]))
